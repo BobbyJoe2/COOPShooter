@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+class UCameraComponent;
+class USpringArmComponent;
+
 UCLASS()
 class COOPSHOOTER_API ASCharacter : public ACharacter
 {
@@ -21,6 +24,11 @@ protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UCameraComponent* CameraComp;
+
+	USpringArmComponent* SpringArmComp;
 
 public:	
 	// Called every frame
