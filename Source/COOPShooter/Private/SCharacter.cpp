@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "..\Public\SCharacter.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -79,5 +80,14 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &ASCharacter::EndCrouch);
 
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ASCharacter::StartJump);
+}
+
+FVector ASCharacter::GetPawnViewLocation() const
+{
+	if (CameraComp) {
+		return CameraComp->GetComponentLocation();
+	}
+
+	return Super::GetPawnViewLocation();
 }
 
