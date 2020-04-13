@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "SWeapon.h"
 #include "SCharacter.generated.h"
 
 class UCameraComponent;
@@ -49,6 +50,17 @@ protected:
 
 	void BeginZoom();
 	void EndZoom();
+
+	ASWeapon* CurrentWeapon;
+
+	void Fire();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	TSubclassOf<ASWeapon> StartWeaponClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	FName WeaponAttachSocketName;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
