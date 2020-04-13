@@ -94,5 +94,9 @@ void ASWeapon::PlayFireEffect(FVector TracerEndPoint)
 			PC->ClientPlayCameraShake(FireCamShake);
 		}
 	}
+
+	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
+
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, MuzzleLocation, 1.0f, 1.0f, 0.0f);
 }
 
