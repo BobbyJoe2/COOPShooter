@@ -9,8 +9,9 @@
 #include "Particles/ParticleSystem.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "HAL/IConsoleManager.h"
 
-void ASProjectileWeapon::Fire()
+void ASProjectileWeapon::Fire() 
 {
 	//trace the world from pawn eyes to crosshair location
 	AActor* MyOwner = GetOwner();
@@ -20,23 +21,15 @@ void ASProjectileWeapon::Fire()
 		FRotator EyeRotation;
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-		FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
-		FRotator MuzzleRotation = MeshComp->GetSocketRotation(MuzzleSocketName);
+		FVector MuzzleLocation = MeshComp->GetSocketLocation("MuzzleFlashSocket");
 
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 		GetWorld()->SpawnActor<AActor>(ProjectileClass, MuzzleLocation, EyeRotation, SpawnParams);
 
-		APawn* ProjectileOwner = Cast<APawn>(GetOwner());
-		if (ProjectileOwner) {
-			APlayerController* PC = Cast<APlayerController>(ProjectileOwner->GetController());
-			if (PC) {
-				PC->ClientPlayCameraShake(FireCamShake);
-			}
-		}
+		FVector TracerEndPoint = MuzzleLocation;
 
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, MuzzleLocation, 1.0f, 1.0f, 0.0f);
+		PlayFireEffect(TracerEndPoint);
 	}
-
 }

@@ -10,6 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "HAL/IConsoleManager.h"
+#include "Sound/SoundAttenuation.h"
 
 static int32 DebugWeaponsDrawing = 0;
 FAutoConsoleVariableRef CVARDebugWeaponDrawing(
@@ -97,6 +98,8 @@ void ASWeapon::PlayFireEffect(FVector TracerEndPoint)
 
 	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
 
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, MuzzleLocation, 1.0f, 1.0f, 0.0f);
+	
+
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, MuzzleLocation, 1.0f, 1.0f, 0.0f, SoundAttenuationSettings);
 }
 

@@ -20,8 +20,6 @@ public:
 	ASWeapon();
 
 protected:
-	
-
 	void PlayFireEffect(FVector TracerEndPoint);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -50,6 +48,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* FireSound;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundAttenuation* SoundAttenuationSettings;
 
 public:	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
