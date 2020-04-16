@@ -61,8 +61,6 @@ void ASWeapon::Fire()
 			if (ImpactEffect) {
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
 			}
-
-			
 		}
 
 		if (DebugWeaponsDrawing > 0) {
@@ -98,8 +96,5 @@ void ASWeapon::PlayFireEffect(FVector TracerEndPoint)
 
 	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
 
-	
-
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, MuzzleLocation, 1.0f, 1.0f, 0.0f, SoundAttenuationSettings);
 }
-
