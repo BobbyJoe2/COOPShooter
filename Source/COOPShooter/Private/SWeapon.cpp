@@ -91,9 +91,6 @@ void ASWeapon::Fire()
 		else {
 			PlayFireEffect(TracerEndPoint, EyeLocation);
 		}
-		
-		
-		GEngine->AddOnScreenDebugMessage(-1, 200, FColor::Green, FString::Printf(TEXT("%s"), *Hit.ImpactPoint.ToString()));
 	}
 }
 
