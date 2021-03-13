@@ -81,17 +81,23 @@ void ASWeapon::Fire()
 			}
 		}
 
-		
-
 		if (DebugWeaponsDrawing > 0) {
 			DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::White, false, 1.0f, 0, 2.5f);
 		}
 		
-		PlayFireEffect(TracerEndPoint);
+		if (Hit.ImpactPoint != FVector(0, 0, 0)) {
+			PlayFireEffect(Hit.ImpactPoint, EyeLocation);
+		}
+		else {
+			PlayFireEffect(TracerEndPoint, EyeLocation);
+		}
+		
+		
+		GEngine->AddOnScreenDebugMessage(-1, 200, FColor::Green, FString::Printf(TEXT("%s"), *Hit.ImpactPoint.ToString()));
 	}
 }
 
-void ASWeapon::PlayFireEffect(FVector TracerEndPoint)
+void ASWeapon::PlayFireEffect(FVector TracerEndPoint, FVector EyePoint)
 {
 	if (MuzzleEffect) {
 		UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, MeshComp, MuzzleSocketName);

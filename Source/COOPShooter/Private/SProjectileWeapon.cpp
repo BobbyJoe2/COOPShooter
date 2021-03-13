@@ -30,6 +30,6 @@ void ASProjectileWeapon::Fire()
 
 		FVector TracerEndPoint = MuzzleLocation;
 
-		PlayFireEffect(TracerEndPoint);
+		PlayFireEffect(TracerEndPoint, EyeLocation);
 	}
 }

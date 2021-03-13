@@ -20,7 +20,7 @@ public:
 	ASWeapon();
 
 protected:
-	void PlayFireEffect(FVector TracerEndPoint);
+	void PlayFireEffect(FVector TracerEndPoint, FVector EyePoint);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USkeletalMeshComponent* MeshComp;
