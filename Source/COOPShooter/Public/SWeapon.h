@@ -47,6 +47,12 @@ protected:
 	UParticleSystem* TracerEffect;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float BaseDamage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float HeadshotBonusDamage;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	TSubclassOf<UCameraShake> FireCamShake;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
