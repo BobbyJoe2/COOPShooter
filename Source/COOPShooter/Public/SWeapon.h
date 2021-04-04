@@ -55,14 +55,24 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	TSubclassOf<UCameraShake> FireCamShake;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float RateofFire = 0.1f;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* FireSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundAttenuation* SoundAttenuationSettings;
 
+	void Fire();
+
+	FTimerHandle TimerHandle_TimeBetweenShots;
+
 public:	
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	virtual void Fire();
+	
+
+	void StartFire();
+
+	void StopFire();
 
 };

@@ -13,6 +13,7 @@
 #include "Sound/SoundAttenuation.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "COOPShooter/COOPShooter.h"
+#include "TimerManager.h"
 
 static int32 DebugWeaponsDrawing = 0;
 FAutoConsoleVariableRef CVARDebugWeaponDrawing(
@@ -103,6 +104,18 @@ void ASWeapon::Fire()
 			PlayFireEffect(TracerEndPoint, EyeLocation);
 		}
 	}
+}
+
+void ASWeapon::StartFire()
+{
+	GetWorldTimerManager().SetTimer(TimerHandle_TimeBetweenShots, this, &ASWeapon::Fire, RateofFire, true);
+
+	Fire();
+}
+
+void ASWeapon::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 }
 
 void ASWeapon::PlayFireEffect(FVector TracerEndPoint, FVector EyePoint)

@@ -11,7 +11,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "HAL/IConsoleManager.h"
 
-void ASProjectileWeapon::Fire() 
+/*void ASProjectileWeapon::Fire() 
 {
 	//trace the world from pawn eyes to crosshair location
 	AActor* MyOwner = GetOwner();
@@ -32,4 +32,4 @@ void ASProjectileWeapon::Fire()
 
 		PlayFireEffect(TracerEndPoint, EyeLocation);
 	}
-}
+}*/
