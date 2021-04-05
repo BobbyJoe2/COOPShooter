@@ -51,6 +51,7 @@ protected:
 	void BeginZoom();
 	void EndZoom();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	ASWeapon* CurrentWeapon;
 
 	void StartFire();

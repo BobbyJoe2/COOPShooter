@@ -78,15 +78,7 @@ protected:
 	//derived from rate of fire
 	float TimeBetweenShots;
 
-	float NumberBulletsInMag;
-
-	float BulletsInBag;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	float MagMax = 30;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	float TotalBulletsMax = 60;
+	
 
 	bool MagInPlace = true;
 	
@@ -96,6 +88,11 @@ protected:
 	float StartReloadTime;
 	float EndReloadTime;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		float TotalBulletsMax = 180;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float MagMax = 30;
 public:	
 
 	virtual void Fire();
@@ -107,4 +104,10 @@ public:
 	void Reload();
 
 	void CheckReloadEnd();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+		float NumberBulletsInMag;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	float BulletsInBag;
 };
