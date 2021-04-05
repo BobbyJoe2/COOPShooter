@@ -42,6 +42,11 @@ void ASWeapon::CheckReloadEnd()
 	}
 }
 
+void ASWeapon::SetAmmoText()
+{
+	AmmoText = FString::Printf(TEXT("%d / %d"), NumberBulletsInMag, BulletsInBag );
+}
+
 void ASWeapon::BeginPlay()
 {
 	Super::BeginPlay();

@@ -89,10 +89,13 @@ protected:
 	float EndReloadTime;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		float TotalBulletsMax = 180;
+		int TotalBulletsMax = 180;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	float MagMax = 30;
+	int MagMax = 30;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	FString AmmoText;
 public:	
 
 	virtual void Fire();
@@ -105,9 +108,11 @@ public:
 
 	void CheckReloadEnd();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		float NumberBulletsInMag;
+	void SetAmmoText();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	float BulletsInBag;
+		int NumberBulletsInMag;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	int BulletsInBag;
 };
