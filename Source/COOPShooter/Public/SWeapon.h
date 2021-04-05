@@ -20,6 +20,9 @@ public:
 	ASWeapon();
 
 protected:
+
+	virtual void BeginPlay() override;
+
 	void PlayFireEffect(FVector TracerEndPoint, FVector EyePoint);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -55,24 +58,53 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	TSubclassOf<UCameraShake> FireCamShake;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	float RateofFire = 0.1f;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* FireSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundAttenuation* SoundAttenuationSettings;
 
-	void Fire();
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* ReloadSound;
 
 	FTimerHandle TimerHandle_TimeBetweenShots;
 
-public:	
+	float LastFireTime;
+
+	//Number of bullets shot per minute
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float RateofFire = 240.0f;
+
+	//derived from rate of fire
+	float TimeBetweenShots;
+
+	float NumberBulletsInMag;
+
+	float BulletsInBag;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float MagMax = 30;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float TotalBulletsMax = 60;
+
+	bool MagInPlace = true;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float ReloadLength = 1;
+
+	float StartReloadTime;
+	float EndReloadTime;
+
+public:	
+
+	virtual void Fire();
 
 	void StartFire();
 
 	void StopFire();
 
+	void Reload();
+
+	void CheckReloadEnd();
 };

@@ -35,14 +35,53 @@ ASWeapon::ASWeapon()
 	HeadshotBonusDamage = 2.5f;
 }
 
+void ASWeapon::CheckReloadEnd()
+{
+	if (GetWorld()->TimeSeconds >= EndReloadTime) {
+		MagInPlace = true;
+	}
+}
+
+void ASWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TimeBetweenShots = 60 / RateofFire;
+
+	BulletsInBag = TotalBulletsMax;
+	NumberBulletsInMag = MagMax;
+}
+
+void ASWeapon::Reload()
+{
+	MagInPlace = false;
+	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
+	StartReloadTime = GetWorld()->TimeSeconds;
+	EndReloadTime = StartReloadTime + ReloadLength;
+	if (BulletsInBag > 0 && (BulletsInBag - MagMax) >= 0 && NumberBulletsInMag < MagMax) {
+		BulletsInBag = BulletsInBag - (MagMax - NumberBulletsInMag);
+		NumberBulletsInMag = MagMax;
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
+	}
+	else if (BulletsInBag > 0 && (BulletsInBag - MagMax) < 0 && NumberBulletsInMag < MagMax) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
+		NumberBulletsInMag = MagMax - BulletsInBag;
+		BulletsInBag = 0;
+	}
+	else if (BulletsInBag <= 0) {
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Out of Ammo"));
+	}
+	else {
+		
+	}
+}
+
 void ASWeapon::Fire()
 {
 	//trace the world from pawn eyes to crosshair location
 	AActor* MyOwner = GetOwner();
 
-	if (MyOwner) {
-		
-		
+	if (MyOwner && NumberBulletsInMag > 0 && MagInPlace == true) {
 		FVector EyeLocation;
 		FRotator EyeRotation;
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
@@ -103,14 +142,22 @@ void ASWeapon::Fire()
 		else {
 			PlayFireEffect(TracerEndPoint, EyeLocation);
 		}
+		
+		LastFireTime = GetWorld()->TimeSeconds;
+
+		NumberBulletsInMag--;
+	}
+
+	if (NumberBulletsInMag <= 0) {
+		Reload();
 	}
 }
 
 void ASWeapon::StartFire()
 {
-	GetWorldTimerManager().SetTimer(TimerHandle_TimeBetweenShots, this, &ASWeapon::Fire, RateofFire, true);
+	float FirstDelay = FMath::Max(LastFireTime + TimeBetweenShots - GetWorld()->TimeSeconds, 0.0f);
 
-	Fire();
+	GetWorldTimerManager().SetTimer(TimerHandle_TimeBetweenShots, this, &ASWeapon::Fire, TimeBetweenShots, true, FirstDelay);
 }
 
 void ASWeapon::StopFire()
