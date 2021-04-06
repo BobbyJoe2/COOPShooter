@@ -49,8 +49,8 @@ void ASWeapon::BeginPlay()
 
 	TimeBetweenShots = 60 / RateofFire;
 
-	BulletsInBag = TotalBulletsMax;
-	NumberBulletsInMag = MagMax;
+	AmmoInBag = TotalBulletsMax;
+	AmmoInMagazine = MagMax;
 }
 
 void ASWeapon::Reload()
@@ -58,21 +58,21 @@ void ASWeapon::Reload()
 	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
 	StartReloadTime = GetWorld()->TimeSeconds;
 	EndReloadTime = StartReloadTime + ReloadLength;
-	if (BulletsInBag > 0 && (BulletsInBag - MagMax) >= 0 && NumberBulletsInMag < MagMax) {
-		BulletsInBag = BulletsInBag - (MagMax - NumberBulletsInMag);
-		NumberBulletsInMag = MagMax;
+	if (AmmoInBag > 0 && (AmmoInBag - MagMax) >= 0 && AmmoInMagazine < MagMax) {
+		AmmoInBag = AmmoInBag - (MagMax - AmmoInMagazine);
+		AmmoInMagazine = MagMax;
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
 		MagInPlace = false;
 		IsReloading = true;
 	}
-	else if (BulletsInBag > 0 && (BulletsInBag - MagMax) < 0 && NumberBulletsInMag < MagMax) {
+	else if (AmmoInBag > 0 && (AmmoInBag - MagMax) < 0 && AmmoInMagazine < MagMax) {
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
-		NumberBulletsInMag = MagMax - BulletsInBag;
-		BulletsInBag = 0;
+		AmmoInMagazine = MagMax - AmmoInBag;
+		AmmoInBag = 0;
 		MagInPlace = false;
 		IsReloading = true;
 	}
-	else if (BulletsInBag <= 0) {
+	else if (AmmoInBag <= 0) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Out of Ammo"));
 	}
 	else {
@@ -85,7 +85,7 @@ void ASWeapon::Fire()
 	//trace the world from pawn eyes to crosshair location
 	AActor* MyOwner = GetOwner();
 
-	if (MyOwner && NumberBulletsInMag > 0 && MagInPlace == true) {
+	if (MyOwner && AmmoInMagazine > 0 && MagInPlace == true) {
 		FVector EyeLocation;
 		FRotator EyeRotation;
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
@@ -149,10 +149,10 @@ void ASWeapon::Fire()
 		
 		LastFireTime = GetWorld()->TimeSeconds;
 
-		NumberBulletsInMag--;
+		AmmoInMagazine--;
 	}
 
-	if (NumberBulletsInMag <= 0) {
+	if (AmmoInMagazine <= 0) {
 		Reload();
 	}
 }

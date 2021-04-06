@@ -103,11 +103,11 @@ public:
 
 	void CheckReloadEnd();
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon")
-	int NumberBulletsInMag;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	int AmmoInMagazine;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	int BulletsInBag;
+	int AmmoInBag;
 
 	bool IsReloading = false;
 
