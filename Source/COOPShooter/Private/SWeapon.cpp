@@ -39,12 +39,8 @@ void ASWeapon::CheckReloadEnd()
 {
 	if (GetWorld()->TimeSeconds >= EndReloadTime) {
 		MagInPlace = true;
+		IsReloading = false;
 	}
-}
-
-void ASWeapon::SetAmmoText()
-{
-	AmmoText = FString::Printf(TEXT("%d / %d"), NumberBulletsInMag, BulletsInBag );
 }
 
 void ASWeapon::BeginPlay()
@@ -59,7 +55,6 @@ void ASWeapon::BeginPlay()
 
 void ASWeapon::Reload()
 {
-	MagInPlace = false;
 	FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
 	StartReloadTime = GetWorld()->TimeSeconds;
 	EndReloadTime = StartReloadTime + ReloadLength;
@@ -67,11 +62,15 @@ void ASWeapon::Reload()
 		BulletsInBag = BulletsInBag - (MagMax - NumberBulletsInMag);
 		NumberBulletsInMag = MagMax;
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
+		MagInPlace = false;
+		IsReloading = true;
 	}
 	else if (BulletsInBag > 0 && (BulletsInBag - MagMax) < 0 && NumberBulletsInMag < MagMax) {
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
 		NumberBulletsInMag = MagMax - BulletsInBag;
 		BulletsInBag = 0;
+		MagInPlace = false;
+		IsReloading = true;
 	}
 	else if (BulletsInBag <= 0) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Out of Ammo"));

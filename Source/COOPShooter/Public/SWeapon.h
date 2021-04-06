@@ -78,8 +78,6 @@ protected:
 	//derived from rate of fire
 	float TimeBetweenShots;
 
-	
-
 	bool MagInPlace = true;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -93,9 +91,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	int MagMax = 30;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	FString AmmoText;
 public:	
 
 	virtual void Fire();
@@ -108,11 +103,14 @@ public:
 
 	void CheckReloadEnd();
 
-	void SetAmmoText();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		int NumberBulletsInMag;
+	UPROPERTY(VisibleAnywhere, Category = "Weapon")
+	int NumberBulletsInMag;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	int BulletsInBag;
+
+	bool IsReloading = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UAnimSequence* ReloadAnim;
 };

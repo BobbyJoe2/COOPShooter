@@ -120,8 +120,8 @@ void ASCharacter::Tick(float DeltaTime)
 	CameraComp->SetFieldOfView(NewFOV);
 
 	CurrentWeapon->CheckReloadEnd();
-
-	CurrentWeapon->SetAmmoText();
+	
+	IsReloading = CurrentWeapon->IsReloading;
 }
 
 // Called to bind functionality to input
