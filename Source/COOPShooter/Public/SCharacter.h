@@ -36,9 +36,6 @@ protected:
 
 	USpringArmComponent* SpringArmComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	bool bWantsToZoom;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Player")
 	float ZoomedFOV;
 
@@ -66,6 +63,9 @@ protected:
 
 	void Reload();
 
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	float ADSSpeedMultiplier = 0.5;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -75,6 +75,6 @@ public:
 	
 	virtual FVector GetPawnViewLocation() const override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	bool IsReloading = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		bool bWantsToZoom;
 };

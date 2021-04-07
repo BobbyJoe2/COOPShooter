@@ -25,6 +25,9 @@ FAutoConsoleVariableRef CVARDebugWeaponDrawing(
 // Sets default values
 ASWeapon::ASWeapon()
 {
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
 	MeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	RootComponent = MeshComp;
 
@@ -41,6 +44,13 @@ void ASWeapon::CheckReloadEnd()
 		MagInPlace = true;
 		IsReloading = false;
 	}
+}
+
+void ASWeapon::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	CheckReloadEnd();
 }
 
 void ASWeapon::BeginPlay()
@@ -61,12 +71,12 @@ void ASWeapon::Reload()
 	if (AmmoInBag > 0 && (AmmoInBag - MagMax) >= 0 && AmmoInMagazine < MagMax) {
 		AmmoInBag = AmmoInBag - (MagMax - AmmoInMagazine);
 		AmmoInMagazine = MagMax;
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
+		//UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
 		MagInPlace = false;
 		IsReloading = true;
 	}
 	else if (AmmoInBag > 0 && (AmmoInBag - MagMax) < 0 && AmmoInMagazine < MagMax) {
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
+		//UGameplayStatics::PlaySoundAtLocation(GetWorld(), ReloadSound, MuzzleLocation);
 		AmmoInMagazine = MagMax - AmmoInBag;
 		AmmoInBag = 0;
 		MagInPlace = false;

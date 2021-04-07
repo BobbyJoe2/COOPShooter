@@ -21,6 +21,9 @@ public:
 
 protected:
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void BeginPlay() override;
 
 	void PlayFireEffect(FVector TracerEndPoint, FVector EyePoint);
@@ -109,6 +112,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	int AmmoInBag;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	bool IsReloading = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")

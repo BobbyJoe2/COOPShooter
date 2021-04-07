@@ -74,17 +74,22 @@ void ASCharacter::EndCrouch()
 
 void ASCharacter::StartJump()
 {
+	if (bWantsToZoom == true) {
+		EndZoom();
+	}
 	Jump();
 }
 
 void ASCharacter::BeginZoom()
 {
 	bWantsToZoom = true;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * ADSSpeedMultiplier;
 }
 
 void ASCharacter::EndZoom()
 {
 	bWantsToZoom = false;
+	GetCharacterMovement()->MaxWalkSpeed = 600;
 }
 
 void ASCharacter::StartFire()
@@ -105,6 +110,9 @@ void ASCharacter::Reload()
 {
 	if (CurrentWeapon) {
 		CurrentWeapon->Reload();
+		if (bWantsToZoom == true) {
+			EndZoom();
+		}
 	}
 }
 
@@ -118,10 +126,6 @@ void ASCharacter::Tick(float DeltaTime)
 	float NewFOV = FMath::FInterpTo(CameraComp->FieldOfView, TargetFOV, DeltaTime, ZoomInterpSpeed);
 
 	CameraComp->SetFieldOfView(NewFOV);
-
-	CurrentWeapon->CheckReloadEnd();
-	
-	IsReloading = CurrentWeapon->IsReloading;
 }
 
 // Called to bind functionality to input
