@@ -16,6 +16,12 @@ void USHealthComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+
+
+	AActor* MyOwner = GetOwner();
+	if (MyOwner) {
+		//MyOwner->OnTakeAnyDamage.AddDynamic(this, &USHealthComponent::);
+	}
 	
 }
 

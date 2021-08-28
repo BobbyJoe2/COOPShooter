@@ -82,9 +82,6 @@ protected:
 	float TimeBetweenShots;
 
 	bool MagInPlace = true;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	float ReloadLength = 1;
 
 	float StartReloadTime;
 	float EndReloadTime;
@@ -117,4 +114,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UAnimSequence* ReloadAnim;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+		float ReloadLength = 1;
 };

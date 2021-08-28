@@ -108,6 +108,7 @@ void ASCharacter::StopFire()
 
 void ASCharacter::Reload()
 {
+
 	if (CurrentWeapon) {
 		CurrentWeapon->Reload();
 		if (bWantsToZoom == true) {
