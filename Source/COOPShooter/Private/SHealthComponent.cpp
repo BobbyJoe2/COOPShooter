@@ -20,7 +20,7 @@ void USHealthComponent::BeginPlay()
 
 	AActor* MyOwner = GetOwner();
 	if (MyOwner) {
-		//MyOwner->OnTakeAnyDamage.AddDynamic(this, &USHealthComponent::);
+		MyOwner->OnTakeAnyDamage.AddDynamic(this, &USHealthComponent::);
 	}
 	
 }
